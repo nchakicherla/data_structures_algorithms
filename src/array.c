@@ -45,18 +45,23 @@ int
 int32_arr_sort_selection(int32_t *arr, size_t n) {
 
 	for (size_t i = 0; i < n; i++) {
-		int32_t min = arr[i];
+
+		//int32_t min = arr[i];
 		size_t min_idx = i;
+
+		//*int32
+
 		for (size_t j = i; j < n; j++) {
-			if (arr[j] < min) {
-				min = arr[j];
+			if (arr[j] < arr[min_idx]) {
+				//min = arr[j];
 				min_idx = j;
 			}
 		}
-		int32_t tmp = arr[i];
-		arr[i] = min;
-		arr[min_idx] = tmp;
+		if (min_idx != i) {
+			__swap_int32_ptr_vals(&arr[i], &arr[min_idx]);
+		}
 	}
+
 	return 0;
 }
 
@@ -69,7 +74,7 @@ int32_arr_sort_bubble(int32_t *arr, size_t n) {
 
 	for (size_t i = 0; i < n; i++) {
 
-		for (size_t j = 1; j < n; j++) {
+		for (size_t j = 1; j < n - i; j++) {
 			if (arr[j - 1] > arr[j]) {
 				__swap_int32_ptr_vals(&arr[j - 1], &arr[j]);
 			}
@@ -87,12 +92,14 @@ int32_arr_sort_insertion(int32_t *arr, size_t n) {
 	}
 
 	for (size_t i = 1; i < n; i++) {
-		//int32_t key = arr[i];
-		for (size_t j = i; j > 0; j--) {
-			if (arr[j - 1] > arr[j]) {
-				__swap_int32_ptr_vals(&arr[j - 1], &arr[j]);
-			}
+		int32_t *key_ptr = &arr[i];
+		size_t j = i - 1;
+
+		while (j != SIZE_MAX && arr[j] > *key_ptr) {
+			arr[j + 1] = arr[j];
+			j--;
 		}
+		arr[j + 1] = *key_ptr;
 	}
 
 	return 0;
