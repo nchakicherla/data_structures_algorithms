@@ -92,14 +92,15 @@ int32_arr_sort_insertion(int32_t *arr, size_t n) {
 	}
 
 	for (size_t i = 1; i < n; i++) {
-		int32_t *key_ptr = &arr[i];
+		
+		int32_t key = arr[i];
 		size_t j = i - 1;
 
-		while (j != SIZE_MAX && arr[j] > *key_ptr) {
+		while (j != SIZE_MAX && arr[j] > key) {
 			arr[j + 1] = arr[j];
 			j--;
 		}
-		arr[j + 1] = *key_ptr;
+		arr[j + 1] = key;
 	}
 
 	return 0;

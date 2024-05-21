@@ -7,7 +7,7 @@
 
 #include "array.h"
 
-#define ARR_SIZE			50000
+#define ARR_SIZE			5000
 
 int main(void) {
 
