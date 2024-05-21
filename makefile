@@ -11,9 +11,9 @@ OBJS = 	./obj/array.o 				\
 
 run: final-link
 ifeq ($(OS),Darwin) 
-		./bin/practice.run
+		./bin/main.run
 else 
-		valgrind --track-origins=yes --leak-check=full ./bin/main.run  
+		./bin/main.run  
 endif
 
 final-link: $(OBJS) $(MAIN)
