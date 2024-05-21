@@ -7,7 +7,7 @@ mkdir_obj := $(shell mkdir -p obj)
 
 MAIN = 	./obj/main.o
 
-OBJS = 	./obj/array.o 				\
+OBJS = 	./obj/nc_array.o 				\
 
 run: final-link
 ifeq ($(OS),Darwin) 

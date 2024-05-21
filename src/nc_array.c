@@ -1,4 +1,4 @@
-#include "array.h"
+#include "nc_array.h"
 
 bool RAND_SEEDED = false;
 
@@ -92,7 +92,7 @@ int32_arr_sort_insertion(int32_t *arr, size_t n) {
 	}
 
 	for (size_t i = 1; i < n; i++) {
-		
+
 		int32_t key = arr[i];
 		size_t j = i - 1;
 
@@ -102,6 +102,89 @@ int32_arr_sort_insertion(int32_t *arr, size_t n) {
 		}
 		arr[j + 1] = key;
 	}
+
+	return 0;
+}
+
+int
+int32_arr_sort_merge(int32_t *arr, size_t n) {
+
+	if (n <= 1) {
+		return 0;
+	}
+
+	size_t lh_n = n / 2;
+	size_t rh_n = n - lh_n;
+
+	int32_t *lh_arr = calloc(lh_n, sizeof(int32_t));
+	int32_t *rh_arr = calloc(rh_n, sizeof(int32_t));
+
+	for (size_t i = 0; i < lh_n; i++) {
+		lh_arr[i] = arr[i];
+	}
+
+	size_t j = 0;
+	for (size_t i = lh_n; i < n; i++) {
+		rh_arr[j] = arr[i];
+		j++;
+	}
+
+	int32_arr_sort_merge(lh_arr, lh_n);
+	int32_arr_sort_merge(rh_arr, rh_n);
+
+	size_t ii = 0;
+	size_t jj = 0;
+	size_t kk = 0;
+
+	while (ii < lh_n && jj < rh_n) {
+		if (lh_arr[ii] < rh_arr[jj]) {
+			arr[kk] = lh_arr[ii];
+			ii++;
+		} else {
+			arr[kk] = rh_arr[jj];
+			jj++;
+		}
+		kk++;
+	}
+
+	while (ii < lh_n) {
+		arr[kk] = lh_arr[ii];
+		ii++;
+		kk++;
+	}
+
+	while (jj < rh_n) {
+		arr[kk] = rh_arr[jj];
+		jj++;
+		kk++;
+	}
+
+	free(lh_arr);
+	free(rh_arr);
+	return 0;
+}
+
+int
+int32_arr_sort_quick(int32_t *arr, size_t n) {
+
+	if (n <= 1) {
+		return 0;
+	}
+
+	size_t pivot_idx = SIZE_MAX;
+	int32_t pivot = arr[n - 1];
+
+	for (size_t j = 0; j < n; j++) {
+		if (arr[j] < pivot) {
+			pivot_idx++;
+			__swap_int32_ptr_vals(&arr[j], &arr[pivot_idx]);
+		}
+	}
+	pivot_idx++;
+	__swap_int32_ptr_vals(&arr[pivot_idx], &arr[n - 1]);
+
+	int32_arr_sort_quick(arr, pivot_idx); // sort left of pivot
+	int32_arr_sort_quick(&arr[pivot_idx+1], n - pivot_idx - 1); // sort right of pivot
 
 	return 0;
 }

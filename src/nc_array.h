@@ -23,4 +23,10 @@ int32_arr_sort_bubble(int32_t *arr, size_t n);
 int
 int32_arr_sort_insertion(int32_t *arr, size_t n);
 
+int
+int32_arr_sort_merge(int32_t *arr, size_t n);
+
+int
+int32_arr_sort_quick(int32_t *arr, size_t n);
+
 #endif // NVC_ARRAY_H
