@@ -7,7 +7,7 @@
 
 #include "array.h"
 
-#define ARR_SIZE			10
+#define ARR_SIZE			50
 
 int main(void) {
 
@@ -53,7 +53,8 @@ int main(void) {
 	int32_arr_sort_insertion(arr, ARR_SIZE);
 	time_req = clock() - time_req;
 
-
+	int32_arr_print(arr, ARR_SIZE);
+	printf("insertion sorting took %f - seconds\n\n", (float)time_req / CLOCKS_PER_SEC);
 	free(arr);
 
 	return 0;
