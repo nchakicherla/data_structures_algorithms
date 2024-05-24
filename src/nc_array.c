@@ -51,6 +51,7 @@ int32_arr_sort_selection(int32_t *arr, size_t n) {
 
 		//*int32
 
+		//int32_arr_print(arr, n);
 		for (size_t j = i; j < n; j++) {
 			if (arr[j] < arr[min_idx]) {
 				//min = arr[j];
@@ -74,6 +75,7 @@ int32_arr_sort_bubble(int32_t *arr, size_t n) {
 
 	for (size_t i = 0; i < n; i++) {
 
+		//int32_arr_print(arr, n);
 		for (size_t j = 1; j < n - i; j++) {
 			if (arr[j - 1] > arr[j]) {
 				__swap_int32_ptr_vals(&arr[j - 1], &arr[j]);
@@ -93,6 +95,7 @@ int32_arr_sort_insertion(int32_t *arr, size_t n) {
 
 	for (size_t i = 1; i < n; i++) {
 
+		//int32_arr_print(arr, n);
 		int32_t key = arr[i];
 		size_t j = i - 1;
 
@@ -103,6 +106,7 @@ int32_arr_sort_insertion(int32_t *arr, size_t n) {
 		arr[j + 1] = key;
 	}
 
+	//int32_arr_print(arr, n);
 	return 0;
 }
 
@@ -116,8 +120,8 @@ int32_arr_sort_merge(int32_t *arr, size_t n) {
 	size_t lh_n = n / 2;
 	size_t rh_n = n - lh_n;
 
-	int32_t *lh_arr = calloc(lh_n, sizeof(int32_t));
-	int32_t *rh_arr = calloc(rh_n, sizeof(int32_t));
+	int32_t *lh_arr = calloc(lh_n, sizeof (int32_t));
+	int32_t *rh_arr = calloc(rh_n, sizeof (int32_t));
 
 	for (size_t i = 0; i < lh_n; i++) {
 		lh_arr[i] = arr[i];
@@ -129,7 +133,14 @@ int32_arr_sort_merge(int32_t *arr, size_t n) {
 		j++;
 	}
 
+/*
+	printf("left: ");
+	int32_arr_print(lh_arr, lh_n);
+	printf("right: ");
+	int32_arr_print(rh_arr, lh_n);
+*/
 	int32_arr_sort_merge(lh_arr, lh_n);
+
 	int32_arr_sort_merge(rh_arr, rh_n);
 
 	size_t ii = 0;

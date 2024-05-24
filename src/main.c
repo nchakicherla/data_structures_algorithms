@@ -7,82 +7,40 @@
 
 #include "nc_array.h"
 
-#define ARR_SIZE			50000
+#define ARR_SIZE			100000
+
+int (*int32_arr_sort_fns[10])(int32_t *, size_t);
+
+void
+TESTS_int32_arr_sort(int32_t *arr, size_t len, int32_t upper) {
+
+	int32_arr_sort_fns[0] = int32_arr_sort_selection;
+	int32_arr_sort_fns[1] = int32_arr_sort_bubble;
+	int32_arr_sort_fns[2] = int32_arr_sort_insertion;
+	int32_arr_sort_fns[3] = int32_arr_sort_merge;
+	int32_arr_sort_fns[4] = int32_arr_sort_quick;
+
+	clock_t time_taken = clock();
+
+	for (int i = 0; i < 5; i++) {
+		
+		time_taken = clock();
+		int32_arr_set_all_rand(arr, len, upper);
+
+		int ret = (*int32_arr_sort_fns[i])(arr, len);
+		time_taken = clock() - time_taken;
+
+		printf("i: %d\tret: %d\ttime: %f\n", i + 1, ret, (float)time_taken / CLOCKS_PER_SEC);
+	}
+
+	return;
+}
 
 int main(void) {
+
 	int32_t *arr = calloc(ARR_SIZE, sizeof(int32_t));
 
-
-	int32_arr_set_all_rand(arr, ARR_SIZE, 999);
-	//int32_arr_print(arr, ARR_SIZE);
-	
-
-	printf("\n\nselection sorting...\n");
-	//int32_arr_print(arr, ARR_SIZE);
-	clock_t time_req = clock();
-	int32_arr_sort_selection(arr, ARR_SIZE);
-	time_req = clock() - time_req;
-	
-	//int32_arr_print(arr, ARR_SIZE);
-	printf("selection sorting took %f - seconds\n\n", (float)time_req / CLOCKS_PER_SEC);
-
-	int32_arr_set_all_rand(arr, ARR_SIZE, 999);
-	printf("new rand array...\n");
-	//int32_arr_print(arr, ARR_SIZE);
-
-
-	printf("\n\nbubble sorting...\n");
-
-	time_req = clock();
-	int32_arr_sort_bubble(arr, ARR_SIZE);
-	time_req = clock() - time_req;
-
-	//int32_arr_print(arr, ARR_SIZE);
-	printf("bubble sorting took %f - seconds\n\n", (float)time_req / CLOCKS_PER_SEC);
-	
-
-	int32_arr_set_all_rand(arr, ARR_SIZE, 999);
-	printf("new rand array...\n");
-	//int32_arr_print(arr, ARR_SIZE);
-
-
-	printf("\n\ninsertion sorting...\n");
-
-	time_req = clock();
-	int32_arr_sort_insertion(arr, ARR_SIZE);
-	time_req = clock() - time_req;
-
-	//int32_arr_print(arr, ARR_SIZE);
-	printf("insertion sorting took %f - seconds\n\n", (float)time_req / CLOCKS_PER_SEC);
-
-	int32_arr_set_all_rand(arr, ARR_SIZE, 999);
-	printf("new rand array...\n");
-	//int32_arr_print(arr, ARR_SIZE);
-
-
-	printf("\n\nmerge sorting...\n");
-
-	time_req = clock();
-	int32_arr_sort_merge(arr, ARR_SIZE);
-	time_req = clock() - time_req;
-
-	//int32_arr_print(arr, ARR_SIZE);
-	printf("merge sorting took %f - seconds\n\n", (float)time_req / CLOCKS_PER_SEC);
-
-	int32_arr_set_all_rand(arr, ARR_SIZE, 999);
-	printf("new rand array...\n");
-	//int32_arr_print(arr, ARR_SIZE);
-
-
-	printf("\n\nquick sorting...\n");
-
-	time_req = clock();
-	int32_arr_sort_quick(arr, ARR_SIZE);
-	time_req = clock() - time_req;
-
-	//int32_arr_print(arr, ARR_SIZE);
-	printf("quick sorting took %f - seconds\n\n", (float)time_req / CLOCKS_PER_SEC);
-
+	TESTS_int32_arr_sort(arr, ARR_SIZE, 999);
 
 	free(arr);
 	return 0;
